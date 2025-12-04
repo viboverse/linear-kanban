@@ -44,3 +44,5 @@ next-env.d.ts
 
 # My own Files
 /roadmap.md
+
+/app/generated/prisma
