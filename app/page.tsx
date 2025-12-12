@@ -1,9 +1,11 @@
 import Headerbar from "../components/header-bar";
 import { Board } from "@/components/board";
+import { TaskCard } from "@/components/task-card";
 
-import { Task } from "@prisma/client";
+import { Priority, Task } from "@prisma/client";
+import { use } from "react";
 
-const MOCK_TASKS: Task[] = [
+export const MOCK_TASKS: Task[] = [
   {
     id: "1",
     title: "Fix the navigation bug",
@@ -270,13 +272,39 @@ const MOCK_TASKS: Task[] = [
   },
 ];
 
-export default function Home() {
+export default function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const params = use(searchParams);
+  // const view = use(searchParams).view;
+
+  function filterTasks(priority: Priority) {
+    if (!priority) return MOCK_TASKS;
+    return MOCK_TASKS.filter((task) => task.priority === priority);
+  }
+
+  console.log(params.filter);
+
   return (
     <main className="w-full overflow-hidden bg-neutral-950 text-white">
       <div className="flex flex-col">
         <Headerbar />
 
-        <Board tasks={MOCK_TASKS} />
+        {/* List view */}
+        {params.view === "list" && (
+          <ul>
+            {filterTasks(params.filter as Priority).map((task) => (
+              <li key={task.id}>
+                <TaskCard task={task} />
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {/* Board View */}
+        {params.view === "board" && <Board tasks={MOCK_TASKS} />}
       </div>
     </main>
   );

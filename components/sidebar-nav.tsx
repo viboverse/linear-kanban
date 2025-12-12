@@ -1,3 +1,4 @@
+"use client";
 import {
   SignInButton,
   SignUpButton,
@@ -6,12 +7,13 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import Link from "next/link";
+
 export default function SideBarNav() {
   return (
     <div className="col-span-1 h-screen border-r border-gray-800 bg-stone-950 px-4">
       {/* Header & Logo */}
       <div className="w-full border-b border-blue-600 py-2 text-center">
-        <Link href="/" className="text-xl font-bold">
+        <Link href="/?view=board" className="text-xl font-bold">
           Kanban App
         </Link>
       </div>
@@ -20,7 +22,7 @@ export default function SideBarNav() {
       <div className="flex h-3/4 flex-col items-center justify-between">
         <div className="mt-12 flex w-full flex-col gap-2 rounded-md bg-zinc-800 px-1">
           <Link
-            href="all-issues"
+            href="/?view=list"
             className="cursor-pointer rounded-md bg-blue-800 px-2 py-1 text-center"
           >
             All Issues
