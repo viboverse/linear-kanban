@@ -14,7 +14,7 @@ function getPriorityColor(priority: Priority) {
 
 export function TaskCard({ task }: { task: Task }) {
   return (
-    <div className="hover:cl flex h-full w-80 flex-col gap-4 rounded-2xl border border-gray-800 bg-neutral-900 px-6 py-4 hover:cursor-grab hover:bg-neutral-800">
+    <div className="flex h-full w-80 flex-col gap-4 rounded-2xl border border-gray-800 bg-neutral-900 px-6 py-4 hover:cursor-grab hover:bg-neutral-800">
       {/* Title & Setting */}
       <div className="flex items-center justify-between">
         <h4 className="line-clamp-2 text-sm leading-tight font-semibold">
