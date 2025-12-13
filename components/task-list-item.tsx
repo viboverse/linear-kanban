@@ -23,7 +23,9 @@ export default function TaskListItem({
       <div className="flex items-center justify-between">
         <h2>{title}</h2>
 
-        <span className="flex max-w-sm bg-gray-400 px-4">Status: {status}</span>
+        <span className="flex max-w-sm rounded-2xl bg-gray-800 px-4">
+          Status: {status}
+        </span>
         <div className="space-x-4">
           <span
             className={`rounded-full border px-2 py-1 text-[10px] font-bold ${getPriorityColor(priority)}`}
@@ -38,7 +40,7 @@ export default function TaskListItem({
 
       {/* Labels */}
       <div>
-        <Tag />
+        <Tag className="size-4" />
       </div>
     </li>
   );

@@ -3,7 +3,7 @@ import TaskListItem from "./task-list-item";
 
 export default function TaskList({ tasks }: { tasks: Task[] }) {
   return (
-    <ul className="flex flex-col gap-2 bg-gray-900">
+    <ul className="flex flex-col gap-2">
       {tasks.map((task) => (
         <TaskListItem
           key={task.id}
