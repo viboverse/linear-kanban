@@ -6,9 +6,23 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
+import { BookOpenCheck, CirclePlus, LayoutDashboard, List } from "lucide-react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 export default function SideBarNav() {
+  const searchParams = useSearchParams();
+
+  const currentView = searchParams.get("view") || "board";
+  const currentFilter = searchParams.get("filter");
+
+  function isActive(view: string, filter?: string) {
+    if (filter) {
+      return currentView === view && currentFilter === filter;
+    }
+
+    return currentView === view && !currentFilter;
+  }
   return (
     <div className="sticky top-0 col-span-1 h-screen border-r border-gray-800 bg-stone-950 px-4">
       {/* Header & Logo */}
@@ -23,21 +37,50 @@ export default function SideBarNav() {
         <div className="mt-12 flex w-full flex-col gap-2 rounded-md bg-zinc-800 px-1">
           <Link
             href="/?view=list"
-            className="cursor-pointer rounded-md bg-blue-800 px-2 py-1 text-center"
+            className={`flex items-center gap-3 rounded-md px-4 py-2 ${
+              isActive("list")
+                ? "bg-blue-800 text-white"
+                : "text-gray-300 hover:bg-neutral-800"
+            }`}
           >
-            All Issues
+            <List size={18} />
+            <span>List View</span>
           </Link>
 
-          <button className="cursor-pointer rounded-md bg-blue-800 px-2 py-1">
-            My Issues
-          </button>
+          <Link
+            href="/?view=board"
+            className={`flex items-center gap-3 rounded-md px-4 py-2 ${
+              isActive("board")
+                ? "bg-blue-800 text-white"
+                : "text-gray-300 hover:bg-neutral-800"
+            }`}
+          >
+            <LayoutDashboard size={18} />
+            <span>Board</span>
+          </Link>
+
+          <Link
+            href="/?view=list&filter=me"
+            className={`flex items-center gap-3 rounded-md px-4 py-2 ${
+              isActive("list", "me")
+                ? "bg-blue-800 text-white"
+                : "text-gray-300 hover:bg-neutral-800"
+            }`}
+          >
+            <BookOpenCheck size={18} />
+            <span>My Issues</span>
+          </Link>
         </div>
 
         {/* ADD ISSUE */}
         <div>
-          <button className="cursor-pointer rounded-md bg-blue-800 px-2 py-1">
-            Add New Issue
-          </button>
+          <Link
+            href="/"
+            className="flex cursor-pointer gap-3 rounded-md bg-purple-800 px-4 py-2 hover:bg-purple-900"
+          >
+            <CirclePlus />
+            <span className="font-bold">Add New Issue</span>
+          </Link>
         </div>
 
         <div>
