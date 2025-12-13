@@ -25,7 +25,7 @@ export default function Home({
         <Headerbar />
 
         {/* The Main Board/List */}
-        <div className="bg-zinc-800 px-6">
+        <div className="h-screen bg-zinc-800 px-6">
           {/* List view */}
           {params.view === "list" && (
             <>
@@ -40,7 +40,6 @@ export default function Home({
           )}
 
           {/* Board View */}
-
           {params.view === "board" && <Board tasks={MOCK_TASKS} />}
         </div>
       </div>
