@@ -6,9 +6,10 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
-import { BookOpenCheck, CirclePlus, LayoutDashboard, List } from "lucide-react";
+import { BookOpenCheck, LayoutDashboard, List } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import NewIssueDialog from "./new-issues-dialog";
 
 export default function SideBarNav() {
   const searchParams = useSearchParams();
@@ -74,13 +75,7 @@ export default function SideBarNav() {
 
         {/* ADD ISSUE */}
         <div>
-          <Link
-            href="/"
-            className="flex cursor-pointer gap-3 rounded-md bg-purple-800 px-4 py-2 hover:bg-purple-900"
-          >
-            <CirclePlus />
-            <span className="font-bold">Add New Issue</span>
-          </Link>
+          <NewIssueDialog />
         </div>
 
         <div>
