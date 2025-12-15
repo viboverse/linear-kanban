@@ -47,3 +47,5 @@ next-env.d.ts
 /next-steps.md
 
 /app/generated/prisma
+
+/generated/prisma
