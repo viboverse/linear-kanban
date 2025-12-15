@@ -1,4 +1,9 @@
 "use client";
+
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { BookOpenCheck, LayoutDashboard, List } from "lucide-react";
+import NewIssueDialog from "./new-issues-dialog";
 import {
   SignInButton,
   SignUpButton,
@@ -6,10 +11,6 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
-import { BookOpenCheck, LayoutDashboard, List } from "lucide-react";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import NewIssueDialog from "./new-issues-dialog";
 
 export default function SideBarNav() {
   const searchParams = useSearchParams();
@@ -28,7 +29,7 @@ export default function SideBarNav() {
     <div className="sticky top-0 col-span-1 h-screen border-r border-gray-800 bg-stone-950 px-4">
       {/* Header & Logo */}
       <div className="w-full border-b border-blue-600 py-2 text-center">
-        <Link href="/?view=board" className="text-xl font-bold">
+        <Link href="/?view=board" className="text-xl font-bold text-blue-400">
           Kanban App
         </Link>
       </div>

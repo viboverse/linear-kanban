@@ -1,10 +1,10 @@
-import { CirclePlus } from "lucide-react";
+// "use client";
 
+import { CirclePlus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
-
 import {
   Dialog,
   DialogClose,
@@ -14,40 +14,56 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import PriorityDropdown from "./prority-dropdown";
-import DueDatePicker from "./due-date-picker";
+import { addNewIssue } from "@/actions/addNewIssue";
 
 export default function NewIssueDialog() {
   return (
     <Dialog>
-      <form>
-        {/* The Add New Issue Button */}
-        <DialogTrigger asChild>
-          <Button className="bg-purple-700 px-4" variant="outline">
-            <CirclePlus />
-            Add New Issue
-          </Button>
-        </DialogTrigger>
+      {/* The button in sidebar-nav */}
+      <DialogTrigger asChild>
+        <Button className="bg-purple-700 px-4" variant="outline">
+          <CirclePlus />
+          Add New Issue
+        </Button>
+      </DialogTrigger>
 
-        {/* Dialog */}
-        <DialogContent className="sm:max-w-[425px]">
-          {/* Dialog Header */}
+      {/* The modal */}
+      <DialogContent className="sm:max-w-[425px]">
+        <form action={addNewIssue}>
           <DialogHeader>
-            <DialogTitle>Add New Issue</DialogTitle>
+            <DialogTitle className="mb-4">Add New Issue</DialogTitle>
           </DialogHeader>
 
-          {/* Dialog Inputs */}
+          {/* Title */}
           <div className="grid gap-4">
             <div className="grid gap-3">
               <Label htmlFor="title">Title</Label>
               <Input id="title" name="title" />
             </div>
-
-            {/* Priority & Due Date  */}
+            {/* Priority & Due Date*/}
             <div className="flex items-center justify-between">
-              <PriorityDropdown />
+              {/* Priority */}
+              <div className="flex flex-col gap-3">
+                <Label>Priority</Label>
+                <select
+                  className="group:cursor-pointer flex h-8 w-36 rounded-md border bg-red-50 px-2 shadow-2xl"
+                  name="priority"
+                >
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                </select>
+              </div>
 
-              <DueDatePicker />
+              {/* Due Date  */}
+              <div className="flex flex-col gap-3">
+                <Label>Due Date</Label>
+                <Input
+                  type="date"
+                  name="dueDate"
+                  className="flex h-8 w-36 cursor-pointer items-center rounded-md border px-2 shadow-2xl"
+                />
+              </div>
             </div>
 
             <div className="grid gap-3">
@@ -56,8 +72,8 @@ export default function NewIssueDialog() {
             </div>
           </div>
 
-          {/* Dialog Button */}
-          <DialogFooter>
+          {/* Dialog Footer */}
+          <DialogFooter className="mt-6">
             <Button
               type="submit"
               variant="outline"
@@ -71,8 +87,8 @@ export default function NewIssueDialog() {
               </Button>
             </DialogClose>
           </DialogFooter>
-        </DialogContent>
-      </form>
+        </form>
+      </DialogContent>
     </Dialog>
   );
 }
