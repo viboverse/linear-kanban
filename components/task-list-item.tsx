@@ -1,13 +1,7 @@
 import { Priority, Task } from "@prisma/client";
 import { Tag } from "lucide-react";
 
-type TaskListProp = Pick<Task, "title" | "status" | "priority" | "dueDate">;
-export default function TaskListItem({
-  title,
-  status,
-  priority,
-  dueDate,
-}: TaskListProp) {
+export default function TaskListItem({ task }: { task: Task }) {
   function getPriorityColor(priority: Priority) {
     switch (priority) {
       case "LOW":
@@ -21,18 +15,20 @@ export default function TaskListItem({
   return (
     <li className="space-y-4 rounded-lg bg-gray-700 px-6 py-2">
       <div className="flex items-center justify-between">
-        <h2>{title}</h2>
+        <h2>{task.title}</h2>
 
         <span className="flex max-w-sm rounded-2xl bg-gray-800 px-4">
-          Status: {status}
+          Status: {task.status}
         </span>
         <div className="space-x-4">
           <span
-            className={`rounded-full border px-2 py-1 text-[10px] font-bold ${getPriorityColor(priority)}`}
+            className={`rounded-full border px-2 py-1 text-[10px] font-bold ${getPriorityColor(task.priority)}`}
           >
-            {priority}
+            {task.priority}
           </span>
-          <span>{dueDate ? dueDate.toLocaleDateString() : "No due date"}</span>
+          <span>
+            {task.dueDate ? task.dueDate.toLocaleDateString() : "No due date"}
+          </span>
         </div>
       </div>
 
