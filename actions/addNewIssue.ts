@@ -5,11 +5,17 @@ import { auth } from "@clerk/nextjs/server";
 import { Priority } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-export async function addNewIssue(formData: FormData) {
+export async function addNewIssue(
+  prevState: { success: boolean; message: string } | null,
+  formData: FormData,
+): Promise<{
+  success: boolean;
+  message: string;
+}> {
   const { userId } = await auth();
 
   if (!userId) {
-    throw new Error("You must login!");
+    return { success: false, message: "You Must Be Logged In!" };
   }
 
   const title = formData.get("title") as string;
@@ -18,24 +24,39 @@ export async function addNewIssue(formData: FormData) {
   const dueDateValue = formData.get("dueDate") as string;
 
   if (!title || !title.trim()) {
-    throw new Error("Title is required");
+    return { success: false, message: "Title is required" };
+  }
+
+  if (!description) {
+    return { success: false, message: "description is required" };
   }
 
   const priority = priorityValue.toUpperCase() as Priority;
 
   const dueDate = dueDateValue ? new Date(dueDateValue) : null;
 
-  await prisma.task.create({
-    data: {
-      userId: userId,
-      title: title.trim(),
-      description: description,
-      priority: priority,
-      dueDate: dueDate,
-      status: "TODO",
-      order: 0,
-    },
-  });
+  try {
+    await prisma.task.create({
+      data: {
+        userId: userId,
+        title: title.trim(),
+        description: description,
+        priority: priority,
+        dueDate: dueDate,
+        status: "TODO",
+        order: 0,
+      },
+    });
 
-  revalidatePath("/");
+    revalidatePath("/");
+
+    return { success: true, message: "The Issue Saved succesfuly!" };
+  } catch (error) {
+    console.log("Database Error:", error);
+
+    return {
+      success: false,
+      message: "Failed To Save Issue, Please Try Again Later!",
+    };
+  }
 }

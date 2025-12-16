@@ -1,6 +1,6 @@
-// "use client";
+"use client";
 
-import { CirclePlus } from "lucide-react";
+import { CirclePlus, Divide } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "./ui/button";
@@ -15,8 +15,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { addNewIssue } from "@/actions/addNewIssue";
+import { useActionState } from "react";
 
 export default function NewIssueDialog() {
+  const [state, formAction, isPending] = useActionState(addNewIssue, null);
+
   return (
     <Dialog>
       {/* The button in sidebar-nav */}
@@ -29,7 +32,7 @@ export default function NewIssueDialog() {
 
       {/* The modal */}
       <DialogContent className="sm:max-w-[425px]">
-        <form action={addNewIssue}>
+        <form action={formAction}>
           <DialogHeader>
             <DialogTitle className="mb-4">Add New Issue</DialogTitle>
           </DialogHeader>
@@ -70,6 +73,18 @@ export default function NewIssueDialog() {
               <Label htmlFor="description">Description</Label>
               <Textarea id="description" name="description" />
             </div>
+
+            {state && (
+              <p
+                className={`mb-4 rounded-md p-3 text-sm ${
+                  state.success
+                    ? "bg-green-100 text-green-800"
+                    : "bg-red-100 text-red-800"
+                }`}
+              >
+                {state.message}
+              </p>
+            )}
           </div>
 
           {/* Dialog Footer */}
@@ -78,8 +93,9 @@ export default function NewIssueDialog() {
               type="submit"
               variant="outline"
               className="cursor-pointer bg-green-600"
+              disabled={isPending}
             >
-              Save changes
+              {isPending ? "Saving..." : "Save changes"}
             </Button>
             <DialogClose asChild>
               <Button variant="outline" className="cursor-pointer bg-red-600">
