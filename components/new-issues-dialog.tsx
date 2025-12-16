@@ -15,13 +15,24 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { addNewIssue } from "@/actions/addNewIssue";
-import { useActionState } from "react";
+import { useActionState, useEffect, useState } from "react";
 
 export default function NewIssueDialog() {
   const [state, formAction, isPending] = useActionState(addNewIssue, null);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    function handleCloseModal() {
+      if (state?.success) {
+        setOpen(false);
+      }
+    }
+
+    handleCloseModal();
+  }, [state]);
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       {/* The button in sidebar-nav */}
       <DialogTrigger asChild>
         <Button className="bg-purple-700 px-4" variant="outline">
@@ -92,10 +103,10 @@ export default function NewIssueDialog() {
             <Button
               type="submit"
               variant="outline"
-              className="cursor-pointer bg-green-600"
+              className="cursor-pointer bg-green-400"
               disabled={isPending}
             >
-              {isPending ? "Saving..." : "Save changes"}
+              {isPending ? "Saving..." : "Create Issue"}
             </Button>
             <DialogClose asChild>
               <Button variant="outline" className="cursor-pointer bg-red-600">
