@@ -1,23 +1,17 @@
+import getIssues from "@/actions/getIssues";
 import Headerbar from "../components/header-bar";
 import { Board } from "@/components/board";
 import TaskList from "@/components/taks-list";
 import { MOCK_TASKS } from "@/lib/tasks";
 
-import { Priority } from "@prisma/client";
-import { use } from "react";
-
-export default function Home({
+export default async function Home({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const params = use(searchParams);
+  const params = await searchParams;
 
-  function filterTasks(priority: Priority) {
-    if (!priority) return MOCK_TASKS;
-
-    return MOCK_TASKS.filter((task) => task.priority === priority);
-  }
+  const userIssues = await getIssues();
 
   return (
     <main className="w-full bg-neutral-950 text-white">
@@ -35,12 +29,13 @@ export default function Home({
                   Manage your tasks with priority, status, and due dates
                 </p>
               </div>
-              <TaskList tasks={filterTasks(params.filter as Priority)} />
+              {/* <TaskList tasks={filterTasks(params.filter as Priority)} /> */}
+              <TaskList tasks={MOCK_TASKS} />
             </>
           )}
 
           {/* Board View */}
-          {params.view === "board" && <Board tasks={MOCK_TASKS} />}
+          {params.view === "board" && <Board tasks={userIssues} />}
         </div>
       </div>
     </main>
