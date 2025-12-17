@@ -18,11 +18,15 @@ export default function Column({ title, tasks }: ColumnProps) {
       </header>
 
       <ul className="max-h-[calc(100vh-100px)] overflow-y-auto">
-        <li className="flex flex-wrap items-center justify-center gap-1">
-          {tasks.map((task: Task) => (
-            <TaskCard task={task} key={task.id} />
-          ))}
-        </li>
+        {tasks.length === 0 ? (
+          <p className="text-center">No tasks in thie columns!</p>
+        ) : (
+          <li className="flex flex-wrap items-center justify-center gap-1">
+            {tasks.map((task: Task) => (
+              <TaskCard task={task} key={task.id} />
+            ))}
+          </li>
+        )}
       </ul>
     </div>
   );
