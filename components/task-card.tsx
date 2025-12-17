@@ -35,10 +35,12 @@ export function TaskCard({ task }: { task: Task }) {
         </span>
 
         <span className="text-[15px] text-neutral-400">
-          {new Date().toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-          })}
+          {task.dueDate === null
+            ? "No Due Date!"
+            : task.dueDate.toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+              })}
         </span>
       </div>
     </div>
