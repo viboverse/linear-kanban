@@ -1,5 +1,7 @@
+import deleteIssue from "@/actions/deleteIssue";
 import { Priority, Task } from "@prisma/client";
-import { EllipsisVertical } from "lucide-react";
+import { Pencil } from "lucide-react";
+import { ConfirmationModal } from "./delete-confirmation-modal";
 
 function getPriorityColor(priority: Priority) {
   switch (priority) {
@@ -20,7 +22,8 @@ export function TaskCard({ task }: { task: Task }) {
         <h4 className="line-clamp-2 text-sm leading-tight font-semibold">
           {task.title}
         </h4>
-        <EllipsisVertical className="hover:cursor-pointer" />
+        <Pencil size={12} className="hover:cursor-pointer" />
+        <ConfirmationModal taskId={task.id} deleteAction={deleteIssue} />
       </div>
 
       {/* Priority & Created Date*/}
