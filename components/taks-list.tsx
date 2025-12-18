@@ -7,7 +7,7 @@ export default async function TaskList({ tasks }: { tasks: Task[] }) {
   }
 
   return (
-    <ul className="flex flex-col gap-2">
+    <ul className="flex flex-col gap-2 px-6">
       {tasks.map((task) => (
         <TaskListItem key={task.id} task={task} />
       ))}

@@ -26,7 +26,7 @@ export default function SideBarNav() {
     return currentView === view && !currentFilter;
   }
   return (
-    <div className="sticky top-0 col-span-1 h-screen border-r border-gray-800 bg-stone-950 px-4">
+    <div className="sticky top-0 col-span-1 h-screen border-r border-violet-400/40 bg-zinc-900/10 px-4">
       {/* Header & Logo */}
       <div className="w-full border-b border-blue-600 py-2 text-center">
         <Link href="/?view=board" className="text-xl font-bold text-blue-400">

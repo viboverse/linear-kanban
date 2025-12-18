@@ -13,12 +13,13 @@ export default function TaskListItem({ task }: { task: Task }) {
     }
   }
   return (
-    <li className="space-y-4 rounded-lg bg-gray-700 px-6 py-2">
+    <li className="space-y-4 rounded-lg border border-green-700/30 bg-zinc-700/30 px-6 py-2 transition-transform hover:scale-101 hover:border-green-700/80 hover:bg-zinc-800/40">
       <div className="flex items-center justify-between">
         <h2>{task.title}</h2>
 
-        <span className="flex max-w-sm rounded-2xl bg-gray-800 px-4">
-          Status: {task.status}
+        <span className="flex max-w-sm gap-2 rounded-sm bg-zinc-950 px-4">
+          <p className="text-zinc-200">Status:</p>
+          <p className="text-zinc-400">{task.status.toLowerCase()}</p>
         </span>
         <div className="space-x-4">
           <span

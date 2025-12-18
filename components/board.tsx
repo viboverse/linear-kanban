@@ -7,7 +7,7 @@ export function Board({ tasks }: { tasks: Task[] }) {
   const doneTasks = tasks.filter((task) => task.status === "DONE");
 
   return (
-    <div className="grid h-screen w-full grid-cols-3 gap-2 bg-blue-600 px-1">
+    <div className="grid min-h-screen w-full grid-cols-3 gap-2 px-2 py-4">
       <Column title="Todo" tasks={todoTasks} />
       <Column title="In Progress" tasks={inProgressTasks} />
       <Column title="Done" tasks={doneTasks} />

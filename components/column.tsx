@@ -1,6 +1,7 @@
 import { Task } from "@prisma/client";
 import { Plus } from "lucide-react";
 import { TaskCard } from "./task-card";
+import { ScrollArea } from "./ui/scroll-area";
 
 type ColumnProps = {
   title: "Todo" | "In Progress" | "Done";
@@ -9,25 +10,27 @@ type ColumnProps = {
 
 export default function Column({ title, tasks }: ColumnProps) {
   return (
-    <div className="flex flex-col justify-baseline rounded-2xl bg-red-950">
-      <header className="mb-2 flex w-full justify-between rounded-b-2xl border-b-2 bg-stone-900 px-4 py-2">
-        <h2>
-          {title} ({tasks.length})
+    <div className="flex flex-col justify-baseline gap-2 rounded-sm bg-zinc-950/80 shadow-2xl">
+      <div className="flex w-full justify-between rounded-t-md border-b border-zinc-400/20 bg-zinc-950/80 px-6 py-2">
+        <h2 className="flex gap-2">
+          {title} <p className="text-zinc-400">({tasks.length})</p>
         </h2>
         <Plus className="cursor-pointer" />
-      </header>
+      </div>
 
-      <ul className="max-h-[calc(100vh-100px)] overflow-y-auto">
-        {tasks.length === 0 ? (
-          <p className="text-center">No tasks in thie columns!</p>
-        ) : (
-          <li className="flex flex-wrap items-center justify-center gap-1">
-            {tasks.map((task: Task) => (
-              <TaskCard task={task} key={task.id} />
-            ))}
-          </li>
-        )}
-      </ul>
+      <ScrollArea>
+        <ul className="max-h-[calc(100vh-100px)] pr-3 pl-2">
+          {tasks.length === 0 ? (
+            <p className="text-center">No tasks in thie columns!</p>
+          ) : (
+            <li className="flex flex-wrap items-center justify-center gap-2">
+              {tasks.map((task: Task) => (
+                <TaskCard task={task} key={task.id} />
+              ))}
+            </li>
+          )}
+        </ul>
+      </ScrollArea>
     </div>
   );
 }

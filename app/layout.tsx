@@ -28,9 +28,9 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} bg-zinc-950 antialiased`}
         >
-          <div className="grid grid-cols-5">
+          <div className="mr-2 grid grid-cols-5 gap-2">
             <aside className="col-span-1">
               <SideBarNav />
             </aside>
