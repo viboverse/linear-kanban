@@ -1,7 +1,7 @@
 import deleteIssue from "@/actions/deleteIssue";
 import { Priority, Task } from "@prisma/client";
-import { Pencil } from "lucide-react";
 import { ConfirmationModal } from "./delete-confirmation-modal";
+import EditIssueDialog from "./edit-issue-dialog";
 
 function getPriorityColor(priority: Priority) {
   switch (priority) {
@@ -22,7 +22,7 @@ export function TaskCard({ task }: { task: Task }) {
         <h4 className="line-clamp-2 text-sm leading-tight font-semibold">
           {task.title}
         </h4>
-        <Pencil size={12} className="hover:cursor-pointer" />
+        <EditIssueDialog task={task} taskId={task.id} />
         <ConfirmationModal taskId={task.id} deleteAction={deleteIssue} />
       </div>
 

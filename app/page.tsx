@@ -40,12 +40,12 @@ export default async function Home({
                 </div>
               </div>
               {/* <TaskList tasks={filterTasks(params.filter as Priority)} /> */}
-              <TaskList tasks={MOCK_TASKS} />
+              <TaskList tasks={userIssues} />
             </>
           )}
 
           {/* Board View */}
-          {params.view === "board" && <Board tasks={MOCK_TASKS} />}
+          {params.view === "board" && <Board tasks={userIssues} />}
         </div>
       </div>
     </main>
