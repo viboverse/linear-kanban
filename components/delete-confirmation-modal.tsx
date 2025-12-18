@@ -24,7 +24,7 @@ export function ConfirmationModal({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button className="cursor-pointer">
+        <Button className="cursor-pointer bg-zinc-950">
           <Trash2 />
         </Button>
       </AlertDialogTrigger>
