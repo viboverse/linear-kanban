@@ -1,7 +1,7 @@
 import deleteIssue from "@/actions/deleteIssue";
 import { Priority, Task } from "@prisma/client";
-import { ConfirmationModal } from "./delete-confirmation-modal";
-import EditIssueDialog from "./edit-issue-dialog";
+import { ConfirmationModal } from "./modal/delete-confirmation-dialog";
+import EditIssueDialog from "./modal/edit-issue-dialog";
 
 function getPriorityColor(priority: Priority) {
   switch (priority) {

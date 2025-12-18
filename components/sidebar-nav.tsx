@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { BookOpenCheck, LayoutDashboard, List } from "lucide-react";
-import NewIssueDialog from "./new-issues-dialog";
+import NewIssueDialog from "./modal/new-issues-dialog";
 import {
   SignInButton,
   SignUpButton,
