@@ -77,7 +77,7 @@ export default async function Home({
           )}
 
           {/* Board View */}
-          {params.view === "board" && <Board tasks={filteredTasks} />}
+          {params.view === "board" && <Board tasks={userIssues} />}
         </div>
       </div>
     </main>
