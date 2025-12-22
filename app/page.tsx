@@ -14,12 +14,50 @@ export default async function Home({
   const userIssues = await getIssues();
 
   const search = (params.search as string) || "";
+  const priority = (params.priority as string) || "";
+  const status = (params.status as string) || "";
+  const dueDate = (params.duedate as string) || "";
+
   let filteredTasks = userIssues;
 
+  // Apply search filter
   if (search) {
-    filteredTasks = userIssues.filter((task) =>
+    filteredTasks = filteredTasks.filter((task) =>
       task.title.toLowerCase().includes(search.toLowerCase()),
     );
+  }
+
+  // Apply priority filter
+  if (priority) {
+    filteredTasks = filteredTasks.filter((task) =>
+      task.priority.includes(priority),
+    );
+  }
+
+  // Apply status filter
+  if (status) {
+    filteredTasks = filteredTasks.filter((task) =>
+      task.status.includes(status),
+    );
+  }
+
+  // Apply date sorting (this should be LAST)
+  if (dueDate) {
+    filteredTasks = filteredTasks.toSorted((a, b) => {
+      // Handle null dates - put them at the end
+      if (!a.dueDate && !b.dueDate) return 0;
+      if (!a.dueDate) return 1; // a goes to end
+      if (!b.dueDate) return -1; // b goes to end
+
+      const dateA = new Date(a.dueDate).getTime();
+      const dateB = new Date(b.dueDate).getTime();
+
+      if (dueDate === "ascending") {
+        return dateA - dateB;
+      } else {
+        return dateB - dateA;
+      }
+    });
   }
 
   return (
@@ -39,7 +77,7 @@ export default async function Home({
           )}
 
           {/* Board View */}
-          {params.view === "board" && <Board tasks={userIssues} />}
+          {params.view === "board" && <Board tasks={filteredTasks} />}
         </div>
       </div>
     </main>
