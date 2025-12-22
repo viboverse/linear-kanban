@@ -45,6 +45,7 @@ next-env.d.ts
 # My own Files
 /roadmap.md
 /next-steps.md
+/save.txt
 
 /app/generated/prisma
 
