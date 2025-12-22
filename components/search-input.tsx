@@ -27,7 +27,7 @@ export default function SearchInput() {
     }, 500); // Wait 500ms after user stops typing
 
     return () => clearTimeout(timer);
-  }, [inputValue, router, searchParams]);
+  }, [router, inputValue]);
 
   return (
     <div className="relative">
