@@ -1,38 +1,47 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function SearchInput() {
-  const [inputValue, setInputValue] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const [inputValue, setInputValue] = useState(
+    searchParams.get("search") || "",
+  );
 
-  function handleSearchInput(e: ChangeEvent<HTMLInputElement>) {
-    setInputValue(e.target.value);
-  }
+  // Debounced search (updates URL after user stops typing)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const params = new URLSearchParams(searchParams.toString());
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    router.replace(`/?view=list&search=${inputValue}`);
-  }
+      if (inputValue) {
+        params.set("search", inputValue);
+      } else {
+        params.delete("search");
+      }
+
+      params.set("view", "list");
+      router.replace(`/?${params.toString()}`);
+    }, 500); // Wait 500ms after user stops typing
+
+    return () => clearTimeout(timer);
+  }, [inputValue, router, searchParams]);
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2">
+    <div className="relative">
+      <Search
+        className="absolute top-1/2 left-3 -translate-y-1/2 text-zinc-400"
+        size={18}
+      />
       <input
-        onChange={handleSearchInput}
         value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
         type="text"
         placeholder="Search issues..."
-        className="w-60 rounded-lg border border-zinc-600 py-2 pr-4 pl-4 text-sm focus:border-transparent focus:ring focus:ring-zinc-400 focus:outline-none"
+        className="w-60 rounded-lg border border-zinc-600 py-2 pr-4 pl-10 text-sm focus:border-transparent focus:ring focus:ring-zinc-400 focus:outline-none"
       />
-
-      <button
-        type="submit"
-        className="rounded-md bg-blue-600 px-4 py-2 text-white"
-      >
-        <Search size={18} />
-      </button>
-    </form>
+    </div>
   );
 }
