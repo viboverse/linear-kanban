@@ -43,7 +43,7 @@ export function Board({ tasks: initialTasks }: { tasks: Task[] }) {
 
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
-        task.id === taskId
+        task.id === taskId && task.status !== newStatus
           ? { ...task, status: newStatus, updatedAt: new Date() }
           : task,
       ),
