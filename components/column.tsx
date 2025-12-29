@@ -13,14 +13,16 @@ type ColumnProps = {
 };
 
 export default function Column({ title, tasks, status }: ColumnProps) {
-  const { setNodeRef } = useDroppable({
+  const { setNodeRef, isOver } = useDroppable({
     id: status,
   });
 
   return (
     <div
       ref={setNodeRef}
-      className="flex min-h-[400px] flex-col justify-baseline gap-2 rounded-sm bg-zinc-950/80 shadow-2xl"
+      className={`flex min-h-[400px] flex-col gap-2 rounded-sm bg-zinc-950/80 shadow-2xl transition-colors ${
+        isOver ? "bg-zinc-900/90 ring-2 ring-green-500/50" : ""
+      }`}
     >
       <div className="flex w-full justify-between rounded-t-md border-b border-zinc-400/20 bg-zinc-950/80 px-6 py-2">
         <h2 className="flex gap-2">
@@ -30,15 +32,11 @@ export default function Column({ title, tasks, status }: ColumnProps) {
       </div>
 
       <ScrollArea>
-        <ul className="max-h-[calc(100vh-100px)] pr-3 pl-2">
+        <ul className="flex max-h-[calc(100vh-100px)] flex-wrap items-center justify-center gap-2 pr-3 pl-2">
           {tasks.length === 0 ? (
             <p className="text-center">No tasks in thie columns!</p>
           ) : (
-            <li className="flex flex-wrap items-center justify-center gap-2">
-              {tasks.map((task: Task) => (
-                <TaskCard task={task} key={task.id} />
-              ))}
-            </li>
+            tasks.map((task: Task) => <TaskCard key={task.id} task={task} />)
           )}
         </ul>
       </ScrollArea>

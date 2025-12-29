@@ -17,9 +17,14 @@ export function Board({ tasks: initialTasks }: { tasks: Task[] }) {
   const [isPending, startTransition] = useTransition();
   const [activeTask, setActiveTask] = useState<Task | null>(null); // Track dragged task
 
-  const todoTasks = tasks.filter((task) => task.status === "TODO");
-  const inProgressTasks = tasks.filter((task) => task.status === "IN_PROGRESS");
-  const doneTasks = tasks.filter((task) => task.status === "DONE");
+  function handleFilterTasks(status: Status): Task[] {
+    return tasks
+      .filter((task) => task.status === status)
+      .sort(
+        (a, b) =>
+          new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+      );
+  }
 
   function handleDragStart(event: DragStartEvent) {
     const taskId = event.active.id as string;
@@ -38,7 +43,9 @@ export function Board({ tasks: initialTasks }: { tasks: Task[] }) {
 
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
-        task.id === taskId ? { ...task, status: newStatus } : task,
+        task.id === taskId
+          ? { ...task, status: newStatus, updatedAt: new Date() }
+          : task,
       ),
     );
 
@@ -53,22 +60,18 @@ export function Board({ tasks: initialTasks }: { tasks: Task[] }) {
       onDragEnd={handleDragEnd}
     >
       <div className="grid min-h-screen w-full grid-cols-3 gap-2 px-2 py-4">
-        <Column title="Todo" status="TODO" tasks={todoTasks} />
+        <Column status="TODO" title="Todo" tasks={handleFilterTasks("TODO")} />
         <Column
-          title="In Progress"
           status="IN_PROGRESS"
-          tasks={inProgressTasks}
+          title="In Progress"
+          tasks={handleFilterTasks("IN_PROGRESS")}
         />
-        <Column title="Done" status="DONE" tasks={doneTasks} />
+        <Column status="DONE" title="Done" tasks={handleFilterTasks("DONE")} />
       </div>
 
       {/* Add DragOverlay - this floats above everything */}
       <DragOverlay>
-        {activeTask ? (
-          // <div className="rotate-1">
-          <TaskCard task={activeTask} />
-        ) : // </div>
-        null}
+        {activeTask ? <TaskCard task={activeTask} /> : null}
       </DragOverlay>
     </DndContext>
   );

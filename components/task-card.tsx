@@ -2,9 +2,8 @@ import deleteIssue from "@/actions/deleteIssue";
 import { Priority, Task } from "@prisma/client";
 import { ConfirmationModal } from "./modal/delete-confirmation-dialog";
 import EditIssueDialog from "./modal/edit-issue-dialog";
-import { useDraggable } from "@dnd-kit/core";
-import { CSS } from "@dnd-kit/utilities";
 import { GripVertical } from "lucide-react";
+import { useDraggable } from "@dnd-kit/core";
 
 function getPriorityColor(priority: Priority) {
   switch (priority) {
@@ -18,28 +17,27 @@ function getPriorityColor(priority: Priority) {
 }
 
 export function TaskCard({ task }: { task: Task }) {
-  const { attributes, listeners, setNodeRef, transform, isDragging } =
-    useDraggable({
-      id: task.id,
-    });
+  const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
+    id: task.id,
+  });
 
   const style = {
-    // transform: CSS.Translate.toString(transform),
+    // transform: CSS.Transform.toString(transform),
     opacity: isDragging ? 0.3 : 1,
   };
 
   return (
-    <div
+    <li
       ref={setNodeRef}
       style={style}
-      className={`flex h-full w-full flex-col gap-4 rounded-sm border border-green-700/30 bg-zinc-700 px-6 py-4 transition-transform hover:scale-101 hover:border-green-700 hover:bg-zinc-800 ${isDragging ? "z-50 shadow-2xl" : ""}`}
+      className={`flex h-full w-full flex-col rounded-sm border border-green-700/30 bg-zinc-700 px-6 py-4 transition-transform hover:scale-101 hover:border-green-700 hover:bg-zinc-800 ${isDragging ? "z-50 shadow-2xl" : ""}`}
     >
       {/* Title & Setting */}
       <div className="flex items-center justify-between">
         <button
           {...listeners}
           {...attributes}
-          className="cursor-grabbing hover:text-green-500 active:cursor-grabbing"
+          className="cursor-grabbing touch-none hover:text-green-500 active:cursor-grabbing"
         >
           <GripVertical size={18} />
         </button>
@@ -69,6 +67,6 @@ export function TaskCard({ task }: { task: Task }) {
               })}
         </span>
       </div>
-    </div>
+    </li>
   );
 }
