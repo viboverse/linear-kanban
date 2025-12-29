@@ -2,6 +2,9 @@ import deleteIssue from "@/actions/deleteIssue";
 import { Priority, Task } from "@prisma/client";
 import { ConfirmationModal } from "./modal/delete-confirmation-dialog";
 import EditIssueDialog from "./modal/edit-issue-dialog";
+import { useDraggable } from "@dnd-kit/core";
+import { CSS } from "@dnd-kit/utilities";
+import { GripVertical } from "lucide-react";
 
 function getPriorityColor(priority: Priority) {
   switch (priority) {
@@ -15,15 +18,38 @@ function getPriorityColor(priority: Priority) {
 }
 
 export function TaskCard({ task }: { task: Task }) {
+  const { attributes, listeners, setNodeRef, transform, isDragging } =
+    useDraggable({
+      id: task.id,
+    });
+
+  const style = {
+    // transform: CSS.Translate.toString(transform),
+    opacity: isDragging ? 0.3 : 1,
+  };
+
   return (
-    <div className="flex h-full w-full flex-col gap-4 rounded-sm border border-green-700/30 bg-zinc-700/30 px-6 py-4 transition-transform hover:scale-101 hover:cursor-grab hover:border-green-700/80 hover:bg-zinc-800/40">
+    <div
+      ref={setNodeRef}
+      style={style}
+      className={`flex h-full w-full flex-col gap-4 rounded-sm border border-green-700/30 bg-zinc-700 px-6 py-4 transition-transform hover:scale-101 hover:border-green-700 hover:bg-zinc-800 ${isDragging ? "z-50 shadow-2xl" : ""}`}
+    >
       {/* Title & Setting */}
       <div className="flex items-center justify-between">
+        <button
+          {...listeners}
+          {...attributes}
+          className="cursor-grabbing hover:text-green-500 active:cursor-grabbing"
+        >
+          <GripVertical size={18} />
+        </button>
         <h4 className="line-clamp-2 text-sm leading-tight font-semibold">
           {task.title}
         </h4>
-        <EditIssueDialog task={task} taskId={task.id} />
-        <ConfirmationModal taskId={task.id} deleteAction={deleteIssue} />
+        <div className="flex gap-1">
+          <EditIssueDialog task={task} taskId={task.id} />
+          <ConfirmationModal taskId={task.id} deleteAction={deleteIssue} />
+        </div>
       </div>
 
       {/* Priority & Created Date*/}
