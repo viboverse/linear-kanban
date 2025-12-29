@@ -15,7 +15,7 @@ export default async function getIssues() {
     orderBy: {
       createdAt: "desc",
     },
-    take: 10,
+    // take: 30,
   });
 
   if (!userIssues) {
