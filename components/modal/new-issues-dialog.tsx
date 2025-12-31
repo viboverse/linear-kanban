@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import { addNewIssue } from "@/actions/addNewIssue";
 import { useActionState, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export default function NewIssueDialog() {
   const [state, formAction, isPending] = useActionState(addNewIssue, null);
@@ -24,7 +25,12 @@ export default function NewIssueDialog() {
   useEffect(() => {
     function handleCloseModal() {
       if (state?.success) {
+        toast.success(state.message);
         setOpen(false);
+      }
+
+      if (state?.success === false) {
+        toast.error(state.message);
       }
     }
 
@@ -52,7 +58,7 @@ export default function NewIssueDialog() {
           <div className="grid gap-4">
             <div className="grid gap-3">
               <Label htmlFor="title">Title</Label>
-              <Input id="title" name="title" />
+              <Input id="title" name="title" required />
             </div>
             {/* Priority & Due Date*/}
             <div className="flex items-center justify-between">
@@ -84,18 +90,6 @@ export default function NewIssueDialog() {
               <Label htmlFor="description">Description</Label>
               <Textarea id="description" name="description" />
             </div>
-
-            {state && (
-              <p
-                className={`mb-4 rounded-md p-3 text-sm ${
-                  state.success
-                    ? "bg-green-100 text-green-800"
-                    : "bg-red-100 text-red-800"
-                }`}
-              >
-                {state.message}
-              </p>
-            )}
           </div>
 
           {/* Dialog Footer */}

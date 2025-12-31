@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
+import { toast } from "sonner";
 
 export function ConfirmationModal({
   taskId,
@@ -44,6 +45,7 @@ export function ConfirmationModal({
             <AlertDialogAction
               type="submit"
               className="bg-red-600 hover:bg-red-700"
+              onClick={() => toast.success("Task has been deleted")}
             >
               Yes, Delete
             </AlertDialogAction>

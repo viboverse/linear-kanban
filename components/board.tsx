@@ -11,6 +11,7 @@ import Column from "./column";
 import { Status, Task } from "@prisma/client";
 import updateTaskStatus from "@/actions/updateTaskStatus";
 import { TaskCard } from "./task-card";
+import { toast } from "sonner";
 
 export function Board({ tasks: initialTasks }: { tasks: Task[] }) {
   const [tasks, setTasks] = useState(initialTasks);
@@ -28,7 +29,7 @@ export function Board({ tasks: initialTasks }: { tasks: Task[] }) {
 
   function handleDragStart(event: DragStartEvent) {
     const taskId = event.active.id as string;
-    const task = tasks.find((t) => t.id === taskId);
+    const task = tasks.find((task) => task.id === taskId);
     setActiveTask(task || null);
   }
 
@@ -47,6 +48,10 @@ export function Board({ tasks: initialTasks }: { tasks: Task[] }) {
           ? { ...task, status: newStatus, updatedAt: new Date() }
           : task,
       ),
+    );
+
+    toast.success(
+      `The Task Status has been changed to ${newStatus.charAt(0).toUpperCase() + newStatus.slice(1).toLowerCase()}`,
     );
 
     startTransition(async () => {

@@ -17,6 +17,7 @@ import {
 import { useActionState, useEffect, useState } from "react";
 import { updateIssue } from "@/actions/updateIssue";
 import { Task } from "@prisma/client";
+import { toast } from "sonner";
 
 export default function EditIssueDialog({
   task,
@@ -40,7 +41,12 @@ export default function EditIssueDialog({
   useEffect(() => {
     function handleCloseModal() {
       if (state?.success) {
+        toast.success(state.message);
         setOpen(false);
+      }
+
+      if (state?.success === false) {
+        toast.error(state.message);
       }
     }
 
@@ -106,18 +112,6 @@ export default function EditIssueDialog({
                 defaultValue={task.description || ""}
               />
             </div>
-
-            {state && (
-              <p
-                className={`mb-4 rounded-md p-3 text-sm ${
-                  state.success
-                    ? "bg-green-100 text-green-800"
-                    : "bg-red-100 text-red-800"
-                }`}
-              >
-                {state.message}
-              </p>
-            )}
           </div>
 
           {/* Dialog Footer */}
