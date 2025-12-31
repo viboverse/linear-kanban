@@ -41,7 +41,10 @@ export default function NewIssueDialog() {
     <Dialog open={open} onOpenChange={setOpen}>
       {/* The button in sidebar-nav */}
       <DialogTrigger asChild>
-        <Button className="bg-purple-700 px-4" variant="outline">
+        <Button
+          className="border-zinc-700 px-8 py-6 hover:border-green-500/50 hover:bg-zinc-800"
+          // variant="outline"
+        >
           <CirclePlus />
           Add New Issue
         </Button>

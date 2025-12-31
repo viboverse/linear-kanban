@@ -19,7 +19,7 @@ export default function TaskList({ tasks }: TaskListProp) {
       : tasks;
 
   if (filteredTasks.length === 0) {
-    return <p className="text-center font-bold">No Tasks yet</p>;
+    return <p className="text-center font-bold">No Tasks yet!</p>;
   }
 
   return (

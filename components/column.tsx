@@ -5,6 +5,8 @@ import { Plus } from "lucide-react";
 import { TaskCard } from "./task-card";
 import { ScrollArea } from "./ui/scroll-area";
 import { useDroppable } from "@dnd-kit/core";
+import { Button } from "./ui/button";
+import NewIssueDialog from "./modal/new-issues-dialog";
 
 type ColumnProps = {
   title: "Todo" | "In Progress" | "Done";
@@ -34,7 +36,15 @@ export default function Column({ title, tasks, status }: ColumnProps) {
       <ScrollArea>
         <ul className="flex max-h-[calc(100vh-100px)] flex-wrap items-center justify-center gap-2 pr-3 pl-2">
           {tasks.length === 0 ? (
-            <p className="text-center">No tasks in thie columns!</p>
+            <div className="flex w-full flex-col items-center justify-center gap-4">
+              <div className="text-center">
+                <p className="text-md text-zinc-300">No tasks in this column</p>
+                <p className="text-sm text-zinc-500">
+                  Drag tasks here or create a new one
+                </p>
+              </div>
+              <NewIssueDialog />
+            </div>
           ) : (
             tasks.map((task: Task) => <TaskCard key={task.id} task={task} />)
           )}
