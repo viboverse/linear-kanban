@@ -1,6 +1,5 @@
 "use client";
 
-import { Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -30,18 +29,12 @@ export default function SearchInput() {
   }, [router, inputValue]);
 
   return (
-    <div className="relative">
-      <Search
-        className="absolute top-1/2 left-3 -translate-y-1/2 text-zinc-400"
-        size={18}
-      />
-      <input
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        type="text"
-        placeholder="Search issues..."
-        className="w-60 rounded-lg border border-zinc-600 py-2 pr-4 pl-10 text-sm focus:border-transparent focus:ring focus:ring-zinc-400 focus:outline-none"
-      />
-    </div>
+    <input
+      value={inputValue}
+      onChange={(e) => setInputValue(e.target.value)}
+      type="text"
+      placeholder="Search issues..."
+      className="w-full rounded-lg border border-zinc-700 bg-zinc-800/80 py-2 pr-4 pl-10 text-sm text-zinc-200 placeholder-zinc-500 transition-all outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400"
+    />
   );
 }

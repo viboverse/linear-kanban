@@ -4,13 +4,6 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { BookOpenCheck, LayoutDashboard, List } from "lucide-react";
 import NewIssueDialog from "./modal/new-issues-dialog";
-import {
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
 
 export default function SideBarNav() {
   const searchParams = useSearchParams();
@@ -77,22 +70,6 @@ export default function SideBarNav() {
         {/* ADD ISSUE */}
         <div>
           <NewIssueDialog />
-        </div>
-
-        <div>
-          <header className="flex h-16 items-center justify-end gap-4 p-4">
-            <SignedOut>
-              <SignInButton />
-              <SignUpButton>
-                <button className="h-10 cursor-pointer rounded-full bg-[#6c47ff] px-4 text-sm font-medium text-white sm:h-12 sm:px-5 sm:text-base">
-                  Sign Up
-                </button>
-              </SignUpButton>
-            </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-          </header>
         </div>
       </div>
     </div>

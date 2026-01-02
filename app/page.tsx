@@ -18,6 +18,8 @@ export default async function Home({
   const status = (params.status as string) || "";
   const dueDate = (params.duedate as string) || "";
 
+  const view = (params.view as string) === "list" ? "list" : "board";
+
   let filteredTasks = userIssues;
 
   // Apply search filter
@@ -63,7 +65,7 @@ export default async function Home({
   return (
     <main className="w-full text-white">
       <div className="mt-2 flex flex-col">
-        <Headerbar />
+        <Headerbar view={view} />
 
         {/* The Main Board/List */}
         <div className="min-h-screen bg-zinc-800/30">

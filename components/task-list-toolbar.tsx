@@ -1,4 +1,3 @@
-import SearchInput from "./search-input";
 import FilterButton from "./filter-button";
 
 export default async function TaskListToolbar() {
@@ -12,7 +11,6 @@ export default async function TaskListToolbar() {
           </p>
         </div>
         <div className="flex gap-4">
-          <SearchInput />
           <FilterButton />
         </div>
       </div>
