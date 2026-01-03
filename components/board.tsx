@@ -12,6 +12,7 @@ import { Status, Task } from "@prisma/client";
 import updateTaskStatus from "@/actions/updateTaskStatus";
 import { TaskCard } from "./task-card";
 import { toast } from "sonner";
+import { CheckCircle2, Circle, Clock } from "lucide-react";
 
 export function Board({ tasks: initialTasks }: { tasks: Task[] }) {
   const [tasks, setTasks] = useState(initialTasks);
@@ -60,18 +61,32 @@ export function Board({ tasks: initialTasks }: { tasks: Task[] }) {
   }
 
   return (
-    <DndContext
-      onDragStart={handleDragStart} // Add this
-      onDragEnd={handleDragEnd}
-    >
+    <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <div className="grid min-h-screen w-full grid-cols-3 gap-2 px-2 py-4">
-        <Column status="TODO" title="Todo" tasks={handleFilterTasks("TODO")} />
+        <Column
+          status="TODO"
+          title="Todo"
+          tasks={handleFilterTasks("TODO")}
+          icon={
+            <Circle className="h-4 w-4 text-blue-400 hover:animate-pulse" />
+          }
+        />
         <Column
           status="IN_PROGRESS"
           title="In Progress"
           tasks={handleFilterTasks("IN_PROGRESS")}
+          icon={
+            <Clock className="h-4 w-4 text-orange-400 hover:animate-pulse" />
+          }
         />
-        <Column status="DONE" title="Done" tasks={handleFilterTasks("DONE")} />
+        <Column
+          status="DONE"
+          title="Done"
+          tasks={handleFilterTasks("DONE")}
+          icon={
+            <CheckCircle2 className="h-4 w-4 text-green-400 hover:animate-pulse" />
+          }
+        />
       </div>
 
       {/* Add DragOverlay - this floats above everything */}

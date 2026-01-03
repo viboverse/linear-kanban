@@ -1,20 +1,20 @@
 "use client";
 
 import { Task } from "@prisma/client";
-import { Plus } from "lucide-react";
 import { TaskCard } from "./task-card";
 import { ScrollArea } from "./ui/scroll-area";
 import { useDroppable } from "@dnd-kit/core";
-import { Button } from "./ui/button";
 import NewIssueDialog from "./modal/new-issues-dialog";
+import { ReactNode } from "react";
 
 type ColumnProps = {
   title: "Todo" | "In Progress" | "Done";
   status: "TODO" | "IN_PROGRESS" | "DONE";
   tasks: Task[];
+  icon: ReactNode;
 };
 
-export default function Column({ title, tasks, status }: ColumnProps) {
+export default function Column({ title, tasks, status, icon }: ColumnProps) {
   const { setNodeRef, isOver } = useDroppable({
     id: status,
   });
@@ -27,10 +27,11 @@ export default function Column({ title, tasks, status }: ColumnProps) {
       }`}
     >
       <div className="flex w-full justify-between rounded-t-md border-b border-zinc-400/20 bg-zinc-950/80 px-6 py-2">
-        <h2 className="flex gap-2">
-          {title} <p className="text-zinc-400">({tasks.length})</p>
-        </h2>
-        <Plus className="cursor-pointer" />
+        <div className="flex items-center justify-center gap-2">
+          {icon}
+          <h2>{title}</h2>
+          <p className="text-zinc-400">({tasks.length})</p>
+        </div>
       </div>
 
       <ScrollArea>
