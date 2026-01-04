@@ -43,6 +43,8 @@ export function Board({ tasks: initialTasks }: { tasks: Task[] }) {
     const taskId = active.id as string;
     const newStatus = over.id as Status;
 
+    if (tasks.map((task) => task.status === newStatus)) return;
+
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
         task.id === taskId && task.status !== newStatus
