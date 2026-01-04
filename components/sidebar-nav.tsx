@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { BookOpenCheck, LayoutDashboard, List } from "lucide-react";
+import { LayoutDashboard, List } from "lucide-react";
 import NewIssueDialog from "./modal/new-issues-dialog";
 
 export default function SideBarNav() {
