@@ -2,17 +2,17 @@ import deleteIssue from "@/actions/deleteIssue";
 import { Priority, Task } from "@prisma/client";
 import { ConfirmationModal } from "./modal/delete-confirmation-dialog";
 import EditIssueDialog from "./modal/edit-issue-dialog";
-import { GripVertical } from "lucide-react";
+import { Calendar, Flag, GripVertical } from "lucide-react";
 import { useDraggable } from "@dnd-kit/core";
 
 function getPriorityColor(priority: Priority) {
   switch (priority) {
     case "LOW":
-      return "bg-blue-100 text-blue-700 border-blue-200";
+      return "bg-blue-500/20 text-blue-400 border-blue-500/30";
     case "MEDIUM":
-      return "bg-amber-100 text-amber-700 border-amber-200";
+      return "bg-amber-500/20 text-amber-400 border-amber-500/30";
     case "HIGH":
-      return "bg-red-100 text-red-700 border-red-200";
+      return " bg-red-500/20 text-red-400 border-red-500/30";
   }
 }
 
@@ -22,7 +22,6 @@ export function TaskCard({ task }: { task: Task }) {
   });
 
   const style = {
-    // transform: CSS.Transform.toString(transform),
     opacity: isDragging ? 0.3 : 1,
   };
 
@@ -30,42 +29,56 @@ export function TaskCard({ task }: { task: Task }) {
     <li
       ref={setNodeRef}
       style={style}
-      className={`flex h-full w-full flex-col rounded-sm border border-green-700/30 bg-zinc-700 px-6 py-4 transition-transform hover:scale-101 hover:border-green-700 hover:bg-zinc-800 ${isDragging ? "z-50 shadow-2xl" : ""}`}
+      className={`group flex h-full w-full items-center gap-4 rounded-lg border border-zinc-800 bg-zinc-900/80 px-6 py-4 transition-transform hover:scale-101 hover:bg-zinc-800 ${isDragging ? "z-50 shadow-2xl" : ""}`}
     >
-      {/* Title & Setting */}
-      <div className="flex items-center justify-between">
-        <button
-          {...listeners}
-          {...attributes}
-          className="cursor-grabbing touch-none hover:text-green-500 active:cursor-grabbing"
-        >
-          <GripVertical size={18} />
-        </button>
-        <h4 className="line-clamp-2 text-sm leading-tight font-semibold">
-          {task.title}
-        </h4>
-        <div className="flex gap-1">
-          <EditIssueDialog task={task} taskId={task.id} />
-          <ConfirmationModal taskId={task.id} deleteAction={deleteIssue} />
+      <button
+        {...listeners}
+        {...attributes}
+        className="absolute left-1.5 cursor-grabbing touch-none text-zinc-400 opacity-0 transition-opacity duration-300 group-hover:opacity-80 active:cursor-grabbing"
+      >
+        <GripVertical size={14} />
+      </button>
+
+      <div className="flex w-full flex-col gap-4 pl-3">
+        {/* Title & Setting */}
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <h3 className="line-clamp-2 text-sm font-medium break-all text-zinc-100">
+              {task.title}
+            </h3>
+          </div>
+
+          <div className="flex items-center gap-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            <EditIssueDialog task={task} taskId={task.id} />
+            <ConfirmationModal taskId={task.id} deleteAction={deleteIssue} />
+          </div>
         </div>
-      </div>
 
-      {/* Priority & Created Date*/}
-      <div className="flex items-center justify-between">
-        <span
-          className={`rounded-full border px-2 py-1 text-[10px] font-bold ${getPriorityColor(task.priority)}`}
-        >
-          {task.priority}
-        </span>
+        {/* Priority & Created Date*/}
+        <div className="flex items-center justify-between">
+          <div
+            className={`flex items-center gap-2 rounded-sm border px-2 py-1 ${getPriorityColor(task.priority)}`}
+          >
+            <Flag size={14} />
+            <span className="text-xs font-semibold">
+              {task.priority.charAt(0).toUpperCase() +
+                task.priority.slice(1).toLowerCase()}
+            </span>
+          </div>
 
-        <span className="text-[15px] text-neutral-400">
-          {task.dueDate === null
-            ? "No Due Date!"
-            : task.dueDate.toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-              })}
-        </span>
+          {task.dueDate && (
+            <span className="flex items-center gap-2 text-xs text-zinc-400">
+              <Calendar size={12} />
+              <span>
+                {task.dueDate.toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+              </span>
+            </span>
+          )}
+        </div>
       </div>
     </li>
   );
