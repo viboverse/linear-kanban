@@ -53,18 +53,6 @@ export default function SideBarNav() {
             <LayoutDashboard size={18} />
             <span>Board</span>
           </Link>
-
-          <Link
-            href="/?view=list&filter=me"
-            className={`flex items-center gap-3 rounded-md px-4 py-2 ${
-              isActive("list", "me")
-                ? "bg-blue-800 text-white"
-                : "text-gray-300 hover:bg-neutral-800"
-            }`}
-          >
-            <BookOpenCheck size={18} />
-            <span>My Issues</span>
-          </Link>
         </div>
 
         {/* ADD ISSUE */}
