@@ -34,7 +34,7 @@ export default function SearchInput() {
       onChange={(e) => setInputValue(e.target.value)}
       type="text"
       placeholder="Search issues..."
-      className="w-full rounded-lg border border-zinc-700 bg-zinc-800/80 py-2 pr-4 pl-10 text-sm text-zinc-200 placeholder-zinc-500 transition-all outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400"
+      className="w-80 rounded-lg border border-zinc-700 bg-zinc-800/80 py-2 pr-4 pl-10 text-sm text-zinc-200 placeholder-zinc-500 transition-all outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400"
     />
   );
 }

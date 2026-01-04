@@ -5,12 +5,20 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
-import { currentUser } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { Calendar, Search } from "lucide-react";
 import SearchInput from "./search-input";
 
+import { prisma } from "@/lib/prisma";
+import PieChartDialog from "./piechart-dialog";
+
 export default async function Headerbar({ view }: { view: "board" | "list" }) {
   const user = await currentUser();
+  const { userId } = await auth();
+
+  const tasks = await prisma.task.findMany({
+    where: { userId: userId ?? undefined },
+  });
 
   // Get current date
   const today = new Date().toLocaleDateString("en-US", {
@@ -21,30 +29,35 @@ export default async function Headerbar({ view }: { view: "board" | "list" }) {
 
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-900/95 backdrop-blur-sm">
-      <section className="flex h-16 w-full items-center justify-between px-6">
-        {/* Left: Greeting & Date */}
-        <div className="flex flex-col gap-0.5">
-          <h1 className="text-base font-semibold text-zinc-100">
-            Hello, {user?.firstName}!
-          </h1>
-          <div className="flex items-center gap-1.5 text-xs text-zinc-500">
-            <Calendar size={12} />
-            <span>{today}</span>
-          </div>
-        </div>
-
-        {/* Center: Search (optional) */}
-        {view === "list" && (
-          <div className="hidden flex-1 justify-center md:flex">
-            <div className="relative w-full max-w-md">
-              <Search
-                size={16}
-                className="absolute top-1/2 left-3 -translate-y-1/2 text-zinc-500"
-              />
-              <SearchInput />
+      <section className="flex h-16 w-full items-center justify-between gap-4 px-6">
+        {/* Left: Greeting & Date & Stats */}
+        <div className="flex items-center gap-4">
+          <div className="flex flex-col gap-0.5">
+            <h1 className="text-base font-semibold text-zinc-100">
+              Hello, {user?.firstName}!
+            </h1>
+            <div className="flex items-center gap-1.5 text-xs text-zinc-500">
+              <Calendar size={12} />
+              <span>{today}</span>
             </div>
           </div>
-        )}
+
+          {/* Stats */}
+          <PieChartDialog tasks={tasks} />
+
+          {/* Search (only in list view) */}
+          <div className="flex items-center gap-4">
+            {view === "list" && (
+              <div className="relative max-w-md">
+                <Search
+                  size={16}
+                  className="absolute top-1/2 left-3 -translate-y-1/2 text-zinc-500"
+                />
+                <SearchInput />
+              </div>
+            )}
+          </div>
+        </div>
 
         {/* Right: Actions & User */}
         <div className="flex items-center gap-2">
