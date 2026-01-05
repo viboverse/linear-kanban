@@ -13,6 +13,7 @@ import updateTaskStatus from "@/actions/updateTaskStatus";
 import { TaskCard } from "./task-card";
 import { toast } from "sonner";
 import { CheckCircle2, Circle, Clock } from "lucide-react";
+import { toLittleCase } from "@/utils/toLowerCase";
 
 export function Board({ tasks: initialTasks }: { tasks: Task[] }) {
   const [tasks, setTasks] = useState(initialTasks);
@@ -54,7 +55,7 @@ export function Board({ tasks: initialTasks }: { tasks: Task[] }) {
     if (tasks.map((task) => task.status === newStatus)) return;
 
     toast.success(
-      `The Task Status has been changed to ${newStatus.charAt(0).toUpperCase() + newStatus.slice(1).toLowerCase()}`,
+      `The Task Status has been changed to ${toLittleCase(newStatus)}`,
     );
 
     startTransition(async () => {

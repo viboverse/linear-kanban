@@ -4,6 +4,7 @@ import { ConfirmationModal } from "./modal/delete-confirmation-dialog";
 import EditIssueDialog from "./modal/edit-issue-dialog";
 import { Calendar, Flag, GripVertical } from "lucide-react";
 import { useDraggable } from "@dnd-kit/core";
+import { toLittleCase } from "@/utils/toLowerCase";
 
 function getPriorityColor(priority: Priority) {
   switch (priority) {
@@ -61,8 +62,7 @@ export function TaskCard({ task }: { task: Task }) {
           >
             <Flag size={14} />
             <span className="text-xs font-semibold">
-              {task.priority.charAt(0).toUpperCase() +
-                task.priority.slice(1).toLowerCase()}
+              {toLittleCase(task.priority)}
             </span>
           </div>
 
