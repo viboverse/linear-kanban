@@ -44,7 +44,7 @@ export function TaskCard({ task }: { task: Task }) {
         {/* Title & Setting */}
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <h3 className="line-clamp-2 text-sm font-medium break-all text-zinc-100">
+            <h3 className="line-clamp-2 text-sm font-medium wrap-break-word text-zinc-100">
               {task.title}
             </h3>
           </div>
