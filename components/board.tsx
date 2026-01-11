@@ -37,29 +37,43 @@ export function Board({ tasks: initialTasks }: { tasks: Task[] }) {
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
-    setActiveTask(null); // Clear active task
+    setActiveTask(null);
 
     if (!over) return;
 
     const taskId = active.id as string;
     const newStatus = over.id as Status;
 
+    // Find the task being dragged
+    const currTask = tasks.find((t) => t.id === taskId);
+
+    // If task already has this status, do nothing
+    if (!currTask || currTask.status === newStatus) return;
+
+    // Optimistic update
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
-        task.id === taskId && task.status !== newStatus
+        task.id === taskId
           ? { ...task, status: newStatus, updatedAt: new Date() }
           : task,
       ),
     );
 
-    if (tasks.map((task) => task.status === newStatus)) return;
+    toast.success(`The Task moved to ${toLittleCase(newStatus)} Status.`);
 
-    toast.success(
-      `The Task Status has been changed to ${toLittleCase(newStatus)}`,
-    );
-
+    // Update database
     startTransition(async () => {
-      await updateTaskStatus(taskId, newStatus);
+      try {
+        await updateTaskStatus(taskId, newStatus);
+      } catch (error) {
+        // Revert on error
+        setTasks((prevTasks) =>
+          prevTasks.map((task) =>
+            task.id === taskId ? { ...task, status: currTask.status } : task,
+          ),
+        );
+        toast.error("Failed To Update Task Status!");
+      }
     });
   }
 
