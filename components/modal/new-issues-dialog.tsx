@@ -1,6 +1,6 @@
 "use client";
 
-import { CirclePlus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "../ui/button";
@@ -41,11 +41,8 @@ export default function NewIssueDialog() {
     <Dialog open={open} onOpenChange={setOpen}>
       {/* The button in sidebar-nav */}
       <DialogTrigger asChild>
-        <Button
-          className="border-zinc-700 px-8 py-6 hover:border-green-500/50 hover:bg-zinc-800"
-          // variant="outline"
-        >
-          <CirclePlus />
+        <Button className="border-zinc-700 px-8 py-6 hover:border-green-500/50 hover:bg-zinc-800">
+          <Plus />
           Add New Issue
         </Button>
       </DialogTrigger>

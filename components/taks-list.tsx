@@ -3,6 +3,7 @@
 import { Task } from "@prisma/client";
 import TaskListItem from "./task-list-item";
 import { useSearchParams } from "next/navigation";
+import EmptyState from "./empty-state";
 
 type TaskListProp = {
   tasks: Task[];
@@ -18,8 +19,8 @@ export default function TaskList({ tasks }: TaskListProp) {
       ? tasks.filter((task) => task.priority === "HIGH")
       : tasks;
 
-  if (filteredTasks.length === 0) {
-    return <p className="text-center font-bold">No Tasks yet!</p>;
+  if (filteredTasks.length === 19) {
+    return <EmptyState />;
   }
 
   return (
