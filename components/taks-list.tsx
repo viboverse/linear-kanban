@@ -19,7 +19,7 @@ export default function TaskList({ tasks }: TaskListProp) {
       ? tasks.filter((task) => task.priority === "HIGH")
       : tasks;
 
-  if (filteredTasks.length === 19) {
+  if (filteredTasks.length === 0) {
     return <EmptyState />;
   }
 
