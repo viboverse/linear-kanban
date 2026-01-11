@@ -14,7 +14,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Priority, Status } from "@prisma/client";
+import { Priority, Status } from "@/generated/prisma/client";
 import { Filter } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 

@@ -1,5 +1,5 @@
 import deleteIssue from "@/actions/deleteIssue";
-import { Priority, Task } from "@prisma/client";
+import { Priority, Task } from "@/generated/prisma/client";
 import { ConfirmationModal } from "./modal/delete-confirmation-dialog";
 import EditIssueDialog from "./modal/edit-issue-dialog";
 import { Calendar, Flag, GripVertical } from "lucide-react";
@@ -66,18 +66,16 @@ export function TaskCard({ task }: { task: Task }) {
             </span>
           </div>
 
-          {task.dueDate && (
-            <span className="flex items-center gap-2 text-xs text-zinc-400">
-              <Calendar size={12} />
-              <span>
-                {task.dueDate.toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                  year: "numeric",
-                })}
-              </span>
+          <span className="flex items-center gap-2 text-xs text-zinc-400">
+            <Calendar size={12} />
+            <span>
+              {task.dueDate.toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}
             </span>
-          )}
+          </span>
         </div>
       </div>
     </li>

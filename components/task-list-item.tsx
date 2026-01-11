@@ -1,5 +1,5 @@
 import { toLittleCase } from "@/utils/toLowerCase";
-import { Priority, Status, Task } from "@prisma/client";
+import { Priority, Status, Task } from "@/generated/prisma/client";
 import EditIssueDialog from "./modal/edit-issue-dialog";
 import { ConfirmationModal } from "./modal/delete-confirmation-dialog";
 
@@ -69,15 +69,13 @@ export default function TaskListItem({ task }: { task: Task }) {
           {/* Due Date */}
           <span className="flex w-28 items-center gap-2 text-xs text-zinc-400">
             <Calendar size={12} />
-            {task.dueDate && (
-              <span>
-                {task.dueDate.toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                  year: "numeric",
-                })}
-              </span>
-            )}
+            <span>
+              {task.dueDate.toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}
+            </span>
           </span>
 
           <span className="space-x-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100">

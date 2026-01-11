@@ -19,7 +19,7 @@ import {
 } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { useState } from "react";
-import { Task } from "@prisma/client";
+import { Task } from "@/generated/prisma/client";
 
 const chartConfig = {
   taskCount: {

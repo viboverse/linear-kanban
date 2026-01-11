@@ -8,7 +8,7 @@ import {
 } from "@dnd-kit/core";
 import { useState, useTransition } from "react";
 import Column from "./column";
-import { Status, Task } from "@prisma/client";
+import { Status, Task } from "@/generated/prisma/client";
 import updateTaskStatus from "@/actions/updateTaskStatus";
 import { TaskCard } from "./task-card";
 import { toast } from "sonner";

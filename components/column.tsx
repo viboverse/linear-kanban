@@ -1,6 +1,6 @@
 "use client";
 
-import { Task } from "@prisma/client";
+import { Task } from "@/generated/prisma/client";
 import { TaskCard } from "./task-card";
 import { ScrollArea } from "./ui/scroll-area";
 import { useDroppable } from "@dnd-kit/core";

@@ -1,15 +1,11 @@
 "use client";
 
-import { Task } from "@prisma/client";
+import { Task } from "@/generated/prisma/client";
 import TaskListItem from "./task-list-item";
 import { useSearchParams } from "next/navigation";
 import EmptyState from "./empty-state";
 
-type TaskListProp = {
-  tasks: Task[];
-};
-
-export default function TaskList({ tasks }: TaskListProp) {
+export default function TaskList({ tasks }: { tasks: Task[] }) {
   const params = useSearchParams();
   const filter = params.get("filter");
 

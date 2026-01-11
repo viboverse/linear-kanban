@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
-import { Priority } from "@prisma/client";
+import { Priority } from "@/generated/prisma/client";
 import { revalidatePath } from "next/cache";
 
 export async function updateIssue(
@@ -41,7 +41,7 @@ export async function updateIssue(
 
   const priority = priorityValue.toUpperCase() as Priority;
 
-  const dueDate = dueDateValue ? new Date(dueDateValue) : null;
+  const dueDate = new Date(dueDateValue);
 
   try {
     await prisma.task.update({
