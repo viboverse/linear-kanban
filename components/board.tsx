@@ -59,12 +59,11 @@ export function Board({ tasks: initialTasks }: { tasks: Task[] }) {
       ),
     );
 
-    toast.success(`The Task moved to ${toLittleCase(newStatus)} Status.`);
-
     // Update database
     startTransition(async () => {
       try {
         await updateTaskStatus(taskId, newStatus);
+        toast.success(`The Task moved to ${toLittleCase(newStatus)} Status.`);
       } catch (error) {
         // Revert on error
         setTasks((prevTasks) =>
@@ -73,7 +72,7 @@ export function Board({ tasks: initialTasks }: { tasks: Task[] }) {
           ),
         );
         toast.error("Failed To Update Task Status!");
-        toast.error(`${error}`);
+        console.error(error);
       }
     });
   }
