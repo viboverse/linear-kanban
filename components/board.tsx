@@ -73,6 +73,7 @@ export function Board({ tasks: initialTasks }: { tasks: Task[] }) {
           ),
         );
         toast.error("Failed To Update Task Status!");
+        toast.error(`${error}`);
       }
     });
   }
