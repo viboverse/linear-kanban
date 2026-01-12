@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import { useActionState, useEffect, useState } from "react";
 import { updateIssue } from "@/actions/updateIssue";
-import { Task } from "@prisma/client";
+import { Task } from "@/generated/prisma/client";
 import { toast } from "sonner";
 
 export default function EditIssueDialog({
