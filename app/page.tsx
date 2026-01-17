@@ -70,7 +70,7 @@ export default async function Home({
         {/* The Main Board/List */}
         <div className="min-h-screen bg-zinc-800/30">
           {/* List view */}
-          {params.view === "list" && (
+          {view === "list" && (
             <div>
               <TaskListToolbar />
 
@@ -79,7 +79,7 @@ export default async function Home({
           )}
 
           {/* Board View */}
-          {params.view === "board" && <Board tasks={userIssues} />}
+          {view === "board" && <Board tasks={filteredTasks} />}
         </div>
       </div>
     </main>
