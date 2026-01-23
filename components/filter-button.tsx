@@ -1,6 +1,10 @@
 "use client";
 
+import { Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Priority, Status } from "@/generated/prisma/client";
 import { Button } from "@/components/ui/button";
+import { Filter } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,11 +18,8 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Priority, Status } from "@/generated/prisma/client";
-import { Filter } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
 
-export default function FilterButton() {
+function FilterButtonInner() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -64,11 +65,10 @@ export default function FilterButton() {
 
         <DropdownMenuGroup>
           {/* Priority Filter */}
-          {/* <button onClick={handleFilter}>Filter</button> */}
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>Priority</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent className="bg-zinc-700">
+              <DropdownMenuSubContent className="bg-zinc-400">
                 <DropdownMenuItem
                   onSelect={() => handleFilter("priority", "HIGH")}
                   className={`${
@@ -107,7 +107,7 @@ export default function FilterButton() {
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>Status</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent>
+              <DropdownMenuSubContent className="bg-zinc-400">
                 <DropdownMenuItem
                   onSelect={() => handleFilter("status", "TODO")}
                   className={`${
@@ -146,7 +146,7 @@ export default function FilterButton() {
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>Due Date</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent>
+              <DropdownMenuSubContent className="bg-zinc-400">
                 <DropdownMenuItem
                   onSelect={() => handleFilter("duedate", "ascending")}
                   className={`${
@@ -178,5 +178,15 @@ export default function FilterButton() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+export default function FilterButton() {
+  return (
+    <Suspense
+      fallback={<div className="h-10 w-80 animate-pulse rounded bg-zinc-700" />}
+    >
+      <FilterButtonInner />
+    </Suspense>
   );
 }

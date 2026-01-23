@@ -4,8 +4,9 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { LayoutDashboard, List } from "lucide-react";
 import NewIssueDialog from "./modal/new-issues-dialog";
+import { Suspense } from "react";
 
-export default function SideBarNav() {
+function SideBarNavInner() {
   const searchParams = useSearchParams();
 
   const currentView = searchParams.get("view") || "board";
@@ -61,5 +62,15 @@ export default function SideBarNav() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SideBarNav() {
+  return (
+    <Suspense
+      fallback={<div className="h-10 w-80 animate-pulse rounded bg-zinc-700" />}
+    >
+      <SideBarNavInner />
+    </Suspense>
   );
 }

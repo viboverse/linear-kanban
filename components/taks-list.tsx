@@ -1,11 +1,12 @@
 "use client";
 
+import { Suspense } from "react";
 import { Task } from "@/generated/prisma/client";
-import TaskListItem from "./task-list-item";
 import { useSearchParams } from "next/navigation";
 import EmptyState from "./empty-state";
+import TaskListItem from "./task-list-item";
 
-export default function TaskList({ tasks }: { tasks: Task[] }) {
+function TaskListInner({ tasks }: { tasks: Task[] }) {
   const params = useSearchParams();
   const filter = params.get("filter");
 
@@ -25,5 +26,15 @@ export default function TaskList({ tasks }: { tasks: Task[] }) {
         <TaskListItem key={task.id} task={task} />
       ))}
     </ul>
+  );
+}
+
+export default function TaskList({ tasks }: { tasks: Task[] }) {
+  return (
+    <Suspense
+      fallback={<div className="h-10 w-80 animate-pulse rounded bg-zinc-700" />}
+    >
+      <TaskListInner tasks={tasks} />
+    </Suspense>
   );
 }
